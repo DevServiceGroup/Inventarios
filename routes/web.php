@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+Auth::routes(['register' => false]);
 Route::resource('admin/profile', ProfileController::class)->names('admin.profile');
 Route::resource('admin/productos',ProductosController::class)->names('admin.productos');
 Route::resource('admin/entradas',EntradasController::class)->names('admin.entradas');
@@ -35,7 +36,6 @@ Route::get('vewSalidas/{mensaje}', [TablasController::class, 'vewSalidas'])->nam
 Route::get('/', function () {
     return view('auth/login');
 });
-
 
 Auth::routes();
 
