@@ -15,7 +15,6 @@ class ProfileController extends Controller
     {
         $user = User::find(Auth::id());
         $rol = $user->getRoleNames();
-        $user->rol = $rol[0];
 
 
         return view('profile')->with('user', $user);

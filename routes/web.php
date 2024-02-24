@@ -4,6 +4,7 @@ use App\Http\Controllers\EntradasController;
 use App\Http\Controllers\ProductosController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SalidasController;
+use App\Http\Controllers\ClientesController;
 use App\Http\Controllers\TablasController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -20,6 +21,7 @@ use Illuminate\Support\Facades\Route;
 */
 Auth::routes(['register' => false]);
 Route::resource('admin/profile', ProfileController::class)->names('admin.profile');
+Route::resource('admin/cliente', ClientesController::class)->names('admin.cliente');
 Route::resource('admin/productos',ProductosController::class)->names('admin.productos');
 Route::resource('admin/entradas',EntradasController::class)->names('admin.entradas');
 Route::resource('admin/salidas',SalidasController::class)->names('admin.salidas');

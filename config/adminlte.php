@@ -346,6 +346,11 @@ return [
             'url'  => 'admin/profile',
             'icon' => 'fas fa-fw fa-user',
         ],
+        [
+            'text' => 'Nuevo Cliente',
+            'url'  => 'admin/cliente',
+            'icon' => 'fas fa-fw fa-user',
+        ],
         // [
         //     'text' => 'change_password',    
         //     'url'  => 'admin/settings',
