@@ -8,6 +8,7 @@ use App\Models\Clientes;
 use App\Models\Detalle_movimientos;
 use App\Models\Productos;
 use App\Models\Movimientos;
+use App\Models\Users_has_clientes;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -52,7 +53,11 @@ class SalidasController extends Controller
             $entradas = new Movimientos();
             $entradas->tipo = "SALIDA";
             $entradas->estados_id = 1;
-            $entradas->clientes_id = $request->input('cliente');
+            if ($request->filled('cliente')) {
+                $entradas->clientes_id = $request->filled('cliente');
+            } else {
+                $entradas->clientes_id = Users_has_clientes::find(Auth::id())->clientes_id;
+            }
             $entradas->save();
             $id = $entradas->id;
             $bien = Excel::import(new SalidasImport($id), $exel);
@@ -71,19 +76,24 @@ class SalidasController extends Controller
                 $newsalida->cantidad = $request->input('cantidad');
                 $newsalida->estados_id = 1;
                 $newsalida->tipo = 'SALIDA';
-                $newsalida->clientes_id = $request->input('cliente');
+                if ($request->filled('cliente')) {
+                    $newsalida->clientes_id = $request->filled('cliente');
+                } else {
+                    $newsalida->clientes_id=Users_has_clientes::all()->where('users_id',Auth::id())->first()->clientes_id;
+                }
                 $newsalida->save();
                 $newdetallesalida = new Detalle_movimientos();
                 $newdetallesalida->movimiento_id = $newsalida->id;
                 $newdetallesalida->productos_id = $productos->id;
                 $newdetallesalida->cantidad = $request->input('cantidad');
-                Mail::to('correodejorge@gmail.com')->send(new InventariosMail);
+                // Mail::to('correodejorge@gmail.com')->send(new InventariosMail);
                 $newdetallesalida->save();
                 return redirect()->back()->with('bien', 'si');
             } else {
                 return redirect()->back()->with('exedido', 'si');
             }
         }
+        return redirect()->back()->with('datos', 'inco');
     }
     //$productos = Productos::find($request->input('referencia'));
     //$productos->stock = $productos->stock - $request->input('cantidad');

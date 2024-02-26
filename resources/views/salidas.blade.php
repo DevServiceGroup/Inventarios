@@ -23,15 +23,17 @@
                             @endforeach
                         </select>
                     </div>
-                    <div class="form-group">
-                        <label for="">Cliente</label>
-                        <select name="cliente" id="" class="form-control">
-                            <option value="" disabled selected></option>
-                            @foreach ($clientes as $cliente)
-                                <option value="{{ $cliente->id }}">{{ $cliente->nombre }}</option>
-                            @endforeach
-                        </select>
-                    </div>
+                    @if ($admin == 'si')
+                        <div class="form-group">
+                            <label for="">Cliente</label>
+                            <select name="cliente" id="" class="form-control">
+                                <option value="" disabled selected></option>
+                                @foreach ($clientes as $cliente)
+                                    <option value="{{ $cliente->id }}">{{ $cliente->nombre }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    @endif
                     <div class="form-group">
                         <label for="">Cantidad</label>
                         <input class="form-control" type="number" name="cantidad">
@@ -52,15 +54,17 @@
                         <label for="">Archivo de Exel</label>
                         <input type="file" name="archivo" class="form-control">
                     </div>
-                    <div class="form-group">
-                        <label for="">Cliente</label>
-                        <select name="cliente" id="" class="form-control">
-                            <option value="" disabled selected></option>
-                            @foreach ($clientes as $cliente)
-                                <option value="{{ $cliente->id }}">{{ $cliente->nombre }}</option>
-                            @endforeach
-                        </select>
-                    </div>
+                    @if ($admin == 'si')
+                        <div class="form-group">
+                            <label for="">Cliente</label>
+                            <select name="cliente" id="" class="form-control">
+                                <option value="" disabled selected></option>
+                                @foreach ($clientes as $cliente)
+                                    <option value="{{ $cliente->id }}">{{ $cliente->nombre }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    @endif
                     <div class="form-group">
                         {{-- <label for="" class="col-12">Plantilla</label> --}}
                         <button type="button" class="btn btn-danger mt-4">Descargar Plantilla</button>
@@ -257,6 +261,15 @@
             Swal.fire({
                 title: "Error",
                 text: "Stock exedido",
+                icon: "error"
+            });
+        </script>
+    @endif
+    @if (session('datos') == 'inco')
+        <script>
+            Swal.fire({
+                title: "Error",
+                text: "Digite los datos necesarios",
                 icon: "error"
             });
         </script>

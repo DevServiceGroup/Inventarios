@@ -7,35 +7,40 @@
 @stop
 
 @section('content')
-    <div class="card">
-        <div class="card-body">
-            <h4 class="card-title">Entrada de Productos</h4>
-            <p class="card-text">
-            <form action="{{ route('admin.entradas.store') }}" method="post" enctype="multipart/form-data">
-                @csrf
-                <div class="form-group">
-                    <label for="archivo">Suba el Archivo</label>
-                    <input class="form-control" type="file" name="exel" accept=".xls , .xlsx" id="archivo">
-                </div>
-                <div class="form-group">
-                    <label for="archivo">Fecha</label>
-                    <input class="form-control" type="date" name="fecha">
-                </div>
-                <div class="form-group">
-                    <label for="archivo">Cliente</label>
-                    <select name="cliente" id="" class="form-control">
-                        <option value="" disabled selected></option>
-                        @foreach ($clientes as $cliente)
-                            <option value="{{ $cliente->id }}">{{ $cliente->nombre }}</option>
-                        @endforeach
-                    </select>
-                </div>
-                <button type="submit" class="btn btn-success m-auto">Enviar</button>
-                <button type="button" class="btn btn-danger m-auto">Ver Entradas</button>
-            </form>
-            </p>
+    @if ($admin == 'si')
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Entrada de Productos</h4>
+                <p class="card-text">
+                <form action="{{ route('admin.entradas.store') }}" method="post" enctype="multipart/form-data">
+                    @csrf
+                    <div class="form-group">
+                        <label for="archivo">Suba el Archivo</label>
+                        <input class="form-control" type="file" name="exel" accept=".xls , .xlsx" id="archivo">
+                    </div>
+                    <div class="form-group">
+                        <label for="archivo">Fecha</label>
+                        <input class="form-control" type="date" name="fecha">
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="archivo">Cliente</label>
+                        <select name="cliente" id="" class="form-control">
+                            <option value="" disabled selected></option>
+                            @foreach ($clientes as $cliente)
+                                <option value="{{ $cliente->id }}">{{ $cliente->nombre }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn btn-success m-auto">Enviar</button>
+                    <button type="button" class="btn btn-danger m-auto">Ver Entradas</button>
+                </form>
+                </p>
+            </div>
         </div>
-    </div>
+    @endif
     <div class="card">
         <div class="card-body">
             <h4 class="card-title">Lisra de Entradas</h4>

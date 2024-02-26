@@ -5,7 +5,10 @@ namespace App\Http\Controllers;
 use App\Imports\EntradasImport;
 use App\Models\Clientes;
 use App\Models\Movimientos;
+use App\Models\User;
+use App\Models\Users_has_clientes;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 
 class EntradasController extends Controller
@@ -15,7 +18,8 @@ class EntradasController extends Controller
      */
     public function index()
     {
-        return view('entrada')->with('clientes', Clientes::all());
+        $admin = User::find(Auth::id())->getRoleNames()->first()=='admin' ?  "si":'no';
+        return view('entrada')->with('admin',$admin)->with('clientes', Clientes::all());
     }
 
     /**
@@ -33,20 +37,24 @@ class EntradasController extends Controller
         if ($request->hasFile('exel')) {
             $exel = $request->file('exel');
             $fecha = $request->input('fecha');
-            
+
             $entradas = new Movimientos();
             $entradas->tipo = "ENTRADA";
             $entradas->estados_id = 1;
             $entradas->fecha = $fecha;
-            $entradas->clientes_id = $request->input('cliente');
+            if($request->filled('cliente')){
+                $entradas->clientes_id = $request->filled('cliente');
+            }else{
+                $entradas->clientes_id = Users_has_clientes::find(Auth::id());    
+            }
             $entradas->save();
-            $id=$entradas->id;
+            $id = $entradas->id;
             Excel::import(new EntradasImport($id), $exel);
-            
+
 
             return redirect()->back()->with('bien', 'si');
         }
-        
+
         return redirect()->back()->with('error', 'si');
     }
 
