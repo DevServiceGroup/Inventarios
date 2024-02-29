@@ -7,23 +7,56 @@
 @stop
 
 @section('content')
+
     <div class="row">
-        <div class="card col m-2">
-            <div class="card-body">
-                <h4 class="card-title">Individual</h4>
-                <p class="card-text">
-                <form action="{{ route('admin.salidas.store') }}" method="post" class="row">
-                    @csrf
-                    <div class="form-group">
-                        <label for="">Referencia</label>
-                        <select name="referencia" id="" class="form-control">
-                            <option value="" disabled selected></option>
-                            @foreach ($productos as $producto)
-                                <option value="{{ $producto->id }}">{{ $producto->referencia }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    @if ($admin == 'si')
+        @if ($admin == 'no')
+            <div class="card col m-2">
+                <div class="card-body">
+                    <h4 class="card-title">Individual</h4>
+                    <p class="card-text">
+                    <form action="{{ route('admin.salidas.store') }}" method="post" class="row">
+                        @csrf
+                        <div class="form-group">
+                            <label for="">Referencia</label>
+                            <select name="referencia" id="" class="form-control">
+                                <option value="" disabled selected></option>
+                                @foreach ($productos as $producto)
+                                    <option value="{{ $producto->id }}">{{ $producto->referencia }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        @if ($admin == 'si')
+                            <div class="form-group">
+                                <label for="">Cliente</label>
+                                <select name="cliente" id="" class="form-control">
+                                    <option value="" disabled selected></option>
+                                    @foreach ($clientes as $cliente)
+                                        <option value="{{ $cliente->id }}">{{ $cliente->nombre }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        @endif
+                        <div class="form-group">
+                            <label for="">Cantidad</label>
+                            <input class="form-control" type="number" name="cantidad">
+                        </div>
+                        <button type="submit" class="btn btn-success m-auto col-4">Enviar</button>
+                    </form>
+                    </p>
+                </div>
+            </div>
+            <div class="card col m-2">
+                <div class="card-body">
+                    <h4 class="card-title">Multiple</h4>
+                    <p class="card-text">
+                    <form action="{{ route('admin.salidas.store') }}" method="post" class="row"
+                        enctype="multipart/form-data">
+                        @csrf
+                        <div class="form-group">
+                            <label for="">Archivo de Exel</label>
+                            <input type="file" name="archivo" class="form-control">
+                        </div>
+
                         <div class="form-group">
                             <label for="">Cliente</label>
                             <select name="cliente" id="" class="form-control">
@@ -33,48 +66,18 @@
                                 @endforeach
                             </select>
                         </div>
-                    @endif
-                    <div class="form-group">
-                        <label for="">Cantidad</label>
-                        <input class="form-control" type="number" name="cantidad">
-                    </div>
-                    <button type="submit" class="btn btn-success m-auto col-4">Enviar</button>
-                </form>
-                </p>
-            </div>
-        </div>
-        <div class="card col m-2">
-            <div class="card-body">
-                <h4 class="card-title">Multiple</h4>
-                <p class="card-text">
-                <form action="{{ route('admin.salidas.store') }}" method="post" class="row"
-                    enctype="multipart/form-data">
-                    @csrf
-                    <div class="form-group">
-                        <label for="">Archivo de Exel</label>
-                        <input type="file" name="archivo" class="form-control">
-                    </div>
-                    @if ($admin == 'si')
+
                         <div class="form-group">
-                            <label for="">Cliente</label>
-                            <select name="cliente" id="" class="form-control">
-                                <option value="" disabled selected></option>
-                                @foreach ($clientes as $cliente)
-                                    <option value="{{ $cliente->id }}">{{ $cliente->nombre }}</option>
-                                @endforeach
-                            </select>
+                            {{-- <label for="" class="col-12">Plantilla</label> --}}
+                            <button type="button" class="btn btn-danger mt-4">Descargar Plantilla</button>
                         </div>
-                    @endif
-                    <div class="form-group">
-                        {{-- <label for="" class="col-12">Plantilla</label> --}}
-                        <button type="button" class="btn btn-danger mt-4">Descargar Plantilla</button>
-                    </div>
-                    <button type="submit" class="btn btn-success m-auto col-4">Enviar</button>
-                </form>
-                </p>
+                        <button type="submit" class="btn btn-success m-auto col-4">Enviar</button>
+                    </form>
+                    </p>
+                </div>
             </div>
-        </div>
     </div>
+    @endif
     <div class="card">
         <img class="card-img-top" src="holder.js/100x180/" alt="">
         <div class="card-body">
@@ -98,6 +101,7 @@
         </div>
 
     </div>
+
     <div class="modal fade " id="modelId" tabindex="-1" role="dialog" aria-labelledby="modelTitleId">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
@@ -130,6 +134,7 @@
             </div>
         </div>
     </div>
+
 @stop
 
 @section('css')

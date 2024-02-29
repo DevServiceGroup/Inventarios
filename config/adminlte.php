@@ -337,7 +337,7 @@ return [
             'label_color' => 'success',
             'can'         => 'admin'
         ],
-        ['header' => 'account_settings'],
+        ['header' => 'Configuracion de la cuenta'],
         [
             'text' => 'profile',
             'url'  => 'admin/profile',
