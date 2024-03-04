@@ -25,6 +25,7 @@ Route::resource('admin/cliente', ClientesController::class)->names('admin.client
 Route::resource('admin/productos',ProductosController::class)->names('admin.productos')->middleware('can:admin');
 Route::resource('admin/entradas',EntradasController::class)->names('admin.entradas')->middleware('auth');
 Route::resource('admin/salidas',SalidasController::class)->names('admin.salidas')->middleware('auth');
+Route::get('admin/salidas/entregado/{salida}',[SalidasController::class , 'entregado'])->name('admin.salidas.entregado')->middleware('auth');
 Route::get('admin/inventario' ,function(){
 return view('inventario');
 })->name('admin.inventario')->middleware('auth');

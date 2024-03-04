@@ -129,7 +129,6 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary cerrarModal" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save</button>
                 </div>
             </div>
         </div>
@@ -184,12 +183,18 @@
                             showUrl = showUrl.replace(':id', item.id);
                             enlace = "<a href='" + showUrl +
                                 "' class='btn btn-danger m-1'>Completar</a>";
-                        } else if (admin == 'no' && item.anulado == 'no') {
+                        } else if (admin == 'no' && item.anulado == 'no' && item.estados_id == 1) {
                             var direccion =
                                 "{{ route('admin.salidas.edit', ['salida' => ':id']) }}";
                             direccion = direccion.replace(':id', item.id);
                             enlace = "<a href='" + direccion +
                                 "' class='btn btn-secondary m-1'>Anular</a>";
+                        } else if (admin == 'si' && item.anulado == 'no' && item.estados_id == 2) {
+                            var showUrl =
+                                "{{ route('admin.salidas.entregado', ['salida' => ':id']) }}";
+                            showUrl = showUrl.replace(':id', item.id);
+                            enlace = "<a href='" + showUrl +
+                                "' class='btn btn-danger m-1'>Entregado</a>";
                         }
                         enlace = enlace +
                             '<button type="button" class="btn btn-primary btn-ver-detalles m-1" data-toggle="modal" data-target="#modelId" data-id="' +

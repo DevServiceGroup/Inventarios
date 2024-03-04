@@ -79,7 +79,7 @@ class SalidasController extends Controller
                 if ($request->filled('cliente')) {
                     $newsalida->clientes_id = $request->filled('cliente');
                 } else {
-                    $newsalida->clientes_id=Users_has_clientes::all()->where('users_id',Auth::id())->first()->clientes_id;
+                    $newsalida->clientes_id = Users_has_clientes::all()->where('users_id', Auth::id())->first()->clientes_id;
                 }
                 $newsalida->save();
                 $newdetallesalida = new Detalle_movimientos();
@@ -122,14 +122,21 @@ class SalidasController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Movimientos $movimientos)
+    public function update(Movimientos $salida)
     {
+        
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Movimientos $movimientos)
+    public function destroy(Movimientos $salida)
     {
+    }
+    public function entregado(Movimientos $salida)
+    {
+        $salida->estados_id = 4;
+        $salida->update();
+        return redirect()->back()->with('estado', 'si');
     }
 }
